@@ -1,6 +1,5 @@
 # Infovet-Prototipacao-Mobile
-
-https://www.figma.com/design/SNCPUzGRxTWvOXR2Wju8IV/Info.vet-Mobile-Only?node-id=0-1&t=WkHWpZG8xfvLQRGs-1
+https://www.figma.com/design/UaVw17nW8mONsigN73eLMe/Info.med?node-id=0-1&t=9lJvcT7m9rJOT81r-1
 
 # Imagens da Prototipação Mobile
 | Login | Cadastro | Repositórios | Download | Home | Modelos |
