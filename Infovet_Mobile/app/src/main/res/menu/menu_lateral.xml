@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_login"
+        android:title="Login" />
+
+    <item
+        android:id="@+id/nav_cadastro"
+        android:title="Cadastro" />
+
+    <item
+        android:id="@+id/nav_tela_inicial"
+        android:title="Tela Inicial"/>
+
+    <item
+        android:id="@+id/nav_datasets"
+        android:title="Datasets" />
+
+</menu>
