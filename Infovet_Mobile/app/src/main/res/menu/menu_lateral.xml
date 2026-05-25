@@ -17,4 +17,9 @@
         android:id="@+id/nav_datasets"
         android:title="Datasets" />
 
+    <item
+        android:id="@+id/nav_modelos"
+        android:title="Modelos" />
+
+
 </menu>

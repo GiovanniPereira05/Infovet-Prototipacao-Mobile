@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.Infovet" parent="Base.Theme.Infovet" />
+    <style name="RoundedCorners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item> </style>
 </resources>
