@@ -28,7 +28,10 @@ fun gerarToken(): String {
     return saltBytes.joinToString("") { "%02x".format(it) }
 }
 
-
+fun isEmailValido(email: String): Boolean {
+    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$".toRegex()
+    return email.isNotBlank() && emailRegex.matches(email)
+}
 
 fun isSenhaForte(senha: String): Boolean {
 

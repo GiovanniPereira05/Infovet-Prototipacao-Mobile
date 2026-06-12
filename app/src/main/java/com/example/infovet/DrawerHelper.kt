@@ -1,6 +1,7 @@
 package com.example.infovet
 
 
+import LoginViewModel
 import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,6 +11,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
 object DrawerHelper {
+
+
+
 
     fun setupDrawer(
         activity: AppCompatActivity,
@@ -27,6 +31,12 @@ object DrawerHelper {
             R.string.open_drawer,
             R.string.close_drawer
         )
+
+        val sessionManager = SessionManager(activity)
+        val databaseHelper = DatabaseHelper(activity) // Instancia seu helper de banco de dados
+
+        // Passa ambos para o construtor da ViewModel
+        val viewModel = LoginViewModel(sessionManager, databaseHelper)
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -68,6 +78,18 @@ object DrawerHelper {
                     activity.startActivity(
                         Intent(activity, ModelosActivity::class.java)
                     )
+                }
+
+                R.id.teste_cadastros -> {
+                    activity.startActivity(
+                        Intent(activity, Inicial::class.java)
+                    )
+                }
+                R.id.deslogar -> {
+                    viewModel.deslogar {
+                        Toast.makeText(activity, "Deslogado", Toast.LENGTH_SHORT).show()
+                        activity.startActivity(Intent(activity, infovetlogin::class.java))
+                    }
                 }
             }
 

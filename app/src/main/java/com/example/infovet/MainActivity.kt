@@ -1,6 +1,7 @@
 package com.example.infovet
 
 
+import LoginViewModel
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -36,6 +37,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textViewSenha: TextView
     private lateinit var editTextSenha: EditText
     private lateinit var helper: DatabaseHelper
+    private lateinit var sessionManager: SessionManager
+    private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var viewModel: LoginViewModel
 
 
 
@@ -44,6 +48,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+
+
+        sessionManager = SessionManager(this)
+        databaseHelper = DatabaseHelper(this) // Instancia seu helper de banco de dados
+
+        // Passa ambos para o construtor da ViewModel
+        viewModel = LoginViewModel(sessionManager, databaseHelper)
+
+        // Executa a checagem inteligente
+        viewModel.verificarSessaoValida(
+            onSessaoValida = {
+                Toast.makeText(this, "Login feito com sucesso.", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, TelaInicial::class.java)
+                startActivity(intent)
+
+            },
+            onSessaoExpirada = {
+                // O token expirou ou não existe. Força o login.
+                Toast.makeText(this, "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, infovetlogin::class.java)
+                startActivity(intent)
+
+            })
+
+
+
+
+
+
+
         buttonCadastrar = findViewById(R.id.buttonCadastrar)
         buttonCadastrar.setOnClickListener {
             val intent = Intent(this, infovetlogin::class.java)
@@ -96,9 +131,22 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+//           Verifica se o campo usuario está vazio
+            if (editTextUsuario.text.toString().trim().isEmpty()){
+                editTextUsuario.error = "O nome de usuário é obrigatório!"
+                editTextUsuario.requestFocus()
+                return@setOnClickListener
+            }
+
             if(!isSenhaForte(editTextSenha.text.toString())){
                 editTextSenha.error = "A senha deve ter no mínimo 8 caracteres, 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial."
                 Toast.makeText(this, "Senha muito fraca!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if(!isEmailValido(editTextEmail.text.toString())){
+                editTextEmail.error = "Email invalido"
+                Toast.makeText(this, "Email invalido!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -110,9 +158,7 @@ class MainActivity : AppCompatActivity() {
             val row_id = helper.addUsuario(usuario)
 
 
-            Toast.makeText(this, row_id.toString(), Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, infovetlogin::class.java)
-            startActivity(intent)
+
         }
 
 

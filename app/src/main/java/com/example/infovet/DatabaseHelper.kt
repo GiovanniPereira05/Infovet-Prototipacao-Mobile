@@ -72,7 +72,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun checkSessao(token: String, tempoAtual: Long): Boolean {
         val db = this.readableDatabase
         val cursor = db.rawQuery(
-            "SELECT * FROM sessao WHERE token = ? AND data_expiracao > ?",
+            "SELECT * FROM ${TableSession.TABLE_NAME} WHERE ${TableSession.COL_TOKEN} = ? AND ${TableSession.COL_EXPIRATION} > ?",
             arrayOf(token, tempoAtual.toString())
         )
         if (cursor.moveToFirst()) {

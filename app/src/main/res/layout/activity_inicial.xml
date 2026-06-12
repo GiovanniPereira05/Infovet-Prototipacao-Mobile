@@ -7,11 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".Inicial">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Teste"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="69dp" />
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textViewUsuarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lista de Usuários:"
+            android:textSize="16sp" />
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

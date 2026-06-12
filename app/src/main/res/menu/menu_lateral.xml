@@ -21,5 +21,10 @@
         android:id="@+id/nav_modelos"
         android:title="Modelos" />
 
-
+    <item
+        android:id="@+id/teste_cadastros"
+        android:title="Teste dos cadastros"/>
+    <item
+        android:id="@+id/deslogar"
+        android:title="Sair"/>
 </menu>

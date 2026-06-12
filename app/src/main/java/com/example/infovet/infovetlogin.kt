@@ -1,5 +1,6 @@
 package com.example.infovet
 
+import LoginViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,8 @@ class infovetlogin : AppCompatActivity() {
     private lateinit var buttonLogin: Button
     private lateinit var editTextEmailLogin: EditText
     private lateinit var editTextSenhaLogin: EditText
-
+    private lateinit var viewModel: LoginViewModel
+    private lateinit var sessionHelper: SessionManager
     private lateinit var helper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,8 @@ class infovetlogin : AppCompatActivity() {
 
         editTextEmailLogin = findViewById(R.id.editTextEmailLogin)
         editTextSenhaLogin = findViewById(R.id.editTextSenhaLogin)
+        sessionHelper = SessionManager(this)
+        viewModel = LoginViewModel(sessionHelper, helper)
 
         buttonLogin.setOnClickListener {
             val usuario =  helper.buscarUsuarioPorEmail(editTextEmailLogin.text.toString())
@@ -61,12 +65,13 @@ class infovetlogin : AppCompatActivity() {
                     val sessao = SessionModel(usuario.email, token, expiracao)
                     helper.addSessao(sessao)
 
+                    viewModel.realizarLogin(sessao.email, sessao.token) {
+                        Toast.makeText(this, "Login efetuado com sucesso! Bem-vindo, ${usuario.usuario}", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, TelaInicial::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
 
-
-
-                    val intent = Intent(this, Inicial::class.java)
-                    startActivity(intent)
-                    finish()
                 }else{
                     Toast.makeText(this, "E-mail ou senha incorretos.", Toast.LENGTH_LONG).show()
                 }
