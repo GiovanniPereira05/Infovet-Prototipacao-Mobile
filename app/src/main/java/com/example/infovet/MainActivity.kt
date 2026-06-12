@@ -68,8 +68,7 @@ class MainActivity : AppCompatActivity() {
             onSessaoExpirada = {
                 // O token expirou ou não existe. Força o login.
                 Toast.makeText(this, "Sessão expirada. Faça login novamente.", Toast.LENGTH_LONG).show()
-                val intent = Intent(this, infovetlogin::class.java)
-                startActivity(intent)
+
 
             })
 
@@ -150,12 +149,22 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            if(!validTelefone(editTextTelefone.text.toString())){
+                editTextTelefone.error = "O telefone deve ser valido"
+                Toast.makeText(this, "Telefone Inválido!", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             val salt = gerarSalt()
             val senha_hash = gerarHashSenha(editTextSenha.text.toString() + salt + Config.pepper)
 
 
             val usuario = CadastroModel(editTextUsuario.text.toString(), editTextEmail.text.toString(), editTextTelefone.text.toString(), senha_hash, salt)
             val row_id = helper.addUsuario(usuario)
+
+            Toast.makeText(this, "Cadastro efetuado com sucesso! Faça o Login", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, infovetlogin::class.java)
+            startActivity(intent)
 
 
 

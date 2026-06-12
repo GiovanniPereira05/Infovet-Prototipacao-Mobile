@@ -33,6 +33,11 @@ fun isEmailValido(email: String): Boolean {
     return email.isNotBlank() && emailRegex.matches(email)
 }
 
+fun validTelefone(telefone: String): Boolean {
+    val regex = "^(?:(?:\\+|00)?55\\s?)?(?:\\(?([1-9][0-9])\\)?\\s?)?(9?\\d{5}-?\\d{4})$".toRegex()
+    return regex.matches(telefone)
+}
+
 fun isSenhaForte(senha: String): Boolean {
 
     val regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=!]).{8,}$".toRegex()
